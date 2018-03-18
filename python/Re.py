@@ -1,24 +1,34 @@
 #-*- coding: utf-8 -*-
 
 import os
-import time
+import sys
+import re
 
-input("pause")
-
+aabbList = []
+ababList = []
 wordCountMap = {}
 
 def wordCount(word):
-    
     for c in word:
         count = wordCountMap.get(c, 0)
         wordCountMap[c] = count + 1
 
 def searchAABB(filePath):
-    lines = open(filePath.decode('utf8').encode('gbk'))
+    lines = open(filePath)
     for line in lines:
-        print(line)
-        #TODO 正则匹配
+        #aabb
+        r = r'(.)\1(.)\2
+        b = re.findall(r, line)
+        originB = [''.join(i[0]+i[0] + i[1] + i[1]) for i in b]
+        if len(originB) > 0:
+            print(originB)
+            aabbList.append(originB)
+            
+
+        
+        #統計漢字出現的次數
         wordCount(line)
+        
     lines.close()
   
 def traverse(f):  
@@ -32,11 +42,19 @@ def traverse(f):
         else:  
             traverse(tmp_path)  
               
-path = u'C:/Users/paike/Desktop/文件'
-print path
-traverse(path)
+traverse(sys.argv[1])
 
-for key in wordCountMap.iterkeys():
-    print key, ':', wordCountMap[key]
+wordCountList = []
+
+for key, value in wordCountMap.items():
+    wordCountTuple = (key, value)
+    wordCountList.append(wordCountTuple)
+
+def wordCountListSort(x, y):
+	return cmp(x[1], y[1])
+
+#sortedWordCountList = sorted(wordCountList, key = wordCountListSort)
+
+wordCountList.sort(key=lambda x:(-x[1]))
+
     
-input('pause')
