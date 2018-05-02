@@ -7,18 +7,21 @@ enum dataType {label, noLabel};
 class DataSet {
 private:
 	dataType dt;
-	Matrix& matrix;
-	Vector& labelVector;
+	Matrix* matrix;
+	Vector* labelVector;
 public:
-	DataSet(Matrix& matrix, Vector& labelVector) :matrix(matrix), labelVector(labelVector) {
+	DataSet(Matrix* matrix, Vector* labelVector) :matrix(matrix), labelVector(labelVector) {
 		dt = label;
 	};
-	DataSet(Matrix& matrix) : matrix(matrix), labelVector((Vector&)matrix) {
+	DataSet(Matrix* matrix) : matrix(matrix), labelVector((Vector*)nullptr) {
 		dt = noLabel;
 	};
 
 	~DataSet() {
-		delete &matrix;
+		delete matrix;
+		if (dt == label) {
+			delete labelVector;
+		}
 	};
 
 };
