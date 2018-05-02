@@ -1,16 +1,14 @@
 #pragma once
-
 #include "Vector.h"
 
 class Matrix {
-private:
-	int m; //行数
-	int n; //列数
+
 public:
-	virtual int GetRowNum() = 0; //得到行数
-	virtual int GetColNum() = 0; //得到列数
-	virtual Vector& GetRowVector(int i) = 0; //得到第i行向量
-	virtual Vector& GetColVector(int colIndex) = 0; //得到第j列向量
-	virtual int GetElement(int i, int j) = 0; //得到元素 Mij
+	virtual int GetRowNum() const = 0; //得到行数
+	virtual int GetColNum() const = 0; //得到列数
+	virtual void GetRowVector(int i, Vector& rowVecotr) const = 0; //得到第i行向量
+	virtual void GetColVector(int colIndex, Vector& rowVector) const = 0; //得到第j列向量
+	virtual double GetElement(int i, int j) const = 0; //得到元素 Mij
+	virtual void SetElement(int i, int j, double v) = 0; //将第i行第j列的值设置为v
 
 };
